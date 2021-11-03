@@ -1,0 +1,17 @@
+Atlanta-Sandy Springs-Roswell, GA
+33.6937280,-84.3999113,40mi
+
+Phoenix-Mesa-Scottsdale, AZ
+33.448400,-112.074000,53mi
+
+Chicago-Naperville-Elgin, IL-IN-WI
+41.905170,-87.624664,50mi
+
+Columbus, OH
+39.968835,-82.986409,45mi
+
+Pittsburgh, PA
+40.437202,-79.982197,28mi
+
+Baltimore-Columbia-Towson, MD
+39.297002,-76.676317,16mi
