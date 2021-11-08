@@ -1,4 +1,8 @@
-VBEST: A Velocity Based Estimation Sampling Technique for Twitter Data
+## VBEST: A Velocity Based Estimates for Sampling Tweets
+
+Citation
+``
+Buskirk, T. & Blakely, B. (2021). Sweet Tweets! Investigating the Performance of a New Method for Probability-Based Twitter Sampling Trent D. Buskirk, Novak Family Distinguished Professor of Data Science, BGSU Brian Blakely, Computer Science and Mathematics Major, BGSU``
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -40,16 +44,11 @@ Insert stuff here
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+* [Python](https://www.python.org/)
+* [R](https://www.r-project.org/)
+* [Rpy2](https://rpy2.github.io/)
+* [Tweepy](https://www.tweepy.org/)
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
