@@ -8,33 +8,6 @@ Citation
 Buskirk, T. & Blakely, B. (2021). Sweet Tweets! Investigating the Performance of a New Method for Probability-Based Twitter Sampling Trent D. Buskirk, Novak Family Distinguished Professor of Data Science, BGSU Brian Blakely, Computer Science and Mathematics Major, BGSU
 `
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -45,9 +18,53 @@ This research conducted at Bowling Green State University.
 
 ### Motivation
 
-Sampling Tweets from Twitter is a common task for researchers, but previous techniques focused on building a graph of connections, where each node represents some relationship between 2 users. This is useful, but for our use case we wanted to randomly sample Twitter for Covid related Tweets based on geography (certain cities in the U.S.). Using the previous techniques of building a graph of users doesn't dynamically scale as new people join Twitter, or visit a city for a weekend and make a Tweet while there. This is why we chose to use [Twitters Search API](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets), which let us sample 1 weeks worth of a data using the free tier
+Sampling Tweets from Twitter is a common task for researchers, but previous techniques focused on building a graph of connections, where each node represents some relationship between 2 users. 
 
+This is useful, but for our use case we wanted to randomly sample Twitter for Covid related Tweets based on geography (certain cities in the U.S.). 
+Using the previous techniques of building a graph of users doesn't dynamically scale as new people join Twitter, or visit a city for a weekend and make a Tweet while there.
 
+This is why we chose to use [Twitters Search API](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets), which let us sample 1 week back in time (with the free edition).
+
+Using this API we can use query tweets using keywords, geography, and much more.
+
+**However**, the issue with the version 1 of this API is that it allows you to select a date to sample from, but doesn't let you specify the time of that day to sample from (this is now a feature in v2). 
+The only thing you could do is use the 'Recent method' in the search API, and slowly work backwords from the end of the day to the start. 
+Depending on the query parameters selected, there could be hundreds of millions of Tweets in a day, which is impossible to collect with the API limitations.
+
+Ideally, we'd want to take a random sample or uniform sample of Tweets, since this lets us stay within the API limitations and reduces bias that could be introduced by only sampling the last N Tweets in a day.
+
+To achieve this, we used synthetically made Tweet IDs to leverage the max_tweet_id query search option to let us sample at any time in a day. 
+With precise time control (down to the millisecond in the day), we could then create any sampling technique we wanted.
+
+### Applications
+
+**This research is directly applicable to [Twitter's Full-Archive Search for Academic Research](https://blog.twitter.com/developer/en_us/topics/tools/2021/enabling-the-future-of-academic-research-with-the-twitter-api)!** 
+
+With researchers having full archive access to Twitter's Tweet database there are going to be hundreds of billions of Tweets that you can look at, but you are limited to a few million each month.
+With so much information available and only being able to access a fraction of it, it becomes important to plan how you spend your queries, so you can get the most out of your months worth of data.
+
+VBEST models the distribution of Tweets, pertaining to your specific search queries, and returns a list of the best times that you should sample based on the distribution of Tweets.
+
+#### Ways to use VBEST in Full-Archive Research 
+
+*This is useable for ANY of the parameters in the Search API, so filtering by keyword searches, and/or geography, and/or language, ect, all work just fine as long as you consistently use the same parameters.*
+
+1. Estimate the number of Tweets for you search query while using minimal queries.
+* This estimation is simply the area under the modeled distribution curve.
+* You could estimate the keyword "Covid" for all of America over the last 2 years.
+    * There would be billions of Tweets, but you don't have to spend billions of queries to find that out. You can simply use VBEST to find an accurate estimate of the total number of Tweets matching our search criteria.
+
+2. Estimating keyword frequency.
+* Keywords can be estimated by first estimating a keyword as defined previously, then apply step 1 again, but using the keyword " * " which is a wildcard operater  allowing any Tweet to be considered.
+* Manually computing keyword frequency could be impossible if the number of Tweets you're considering is in the millions, so estimating it makes it not only possible, but easy
+
+3. Efficient sampling
+  * The main point of VBEST was to build an efficent sampling algorithm around the many caveats of Twitter and its API.
+  * By roughly knowing where Tweets fall in a given day, you can spread your samples out to ensure you don't duplicate any data or waste any queries.
+
+I'm sure there are many other ways to apply this research, but we value these three applications as being essential for any future full-archive research, given the scale of the data available and the API limitations in place.
+
+Using velocity as a source of estimation will allow researchers to get much more out of their limited resources as possible.
 
 
 ### Built With
@@ -102,29 +119,16 @@ How to sample:
       * This needs to be cleaned up to only return 1 output
    * Currently you need to turn the returned sampling timepoints into tweet IDs using sec2ids()
     
+4. Take the tweet IDs and sample 
 
+## Hyper-parameter Testing
 
-# VBEST Algorithm
- The code used in the research and development of the VBEST algorithm for Twitter
+Pre-experiment data comparing hyper-parameters and other smoothing techniques such as spline fitting can be found here.
 
-Pre-experiment data comparing hyperparameters and other smoothing techniques such as spline fitting can be found here
+This mainly compares the number of queries you should use in the uniform sampling step as well as some possible techniques to reduce the variance of velocities.
 
 https://pre-experiment.herokuapp.com/
 
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
