@@ -14,8 +14,6 @@ Buskirk, T. & Blakely, B. (2021). Sweet Tweets! Investigating the Performance of
 
 This research conducted at Bowling Green State University. 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 ### Motivation
 
 Sampling Tweets from Twitter is a common task for researchers, but previous techniques focused on building a graph of connections, where each node represents some relationship between 2 users. 
