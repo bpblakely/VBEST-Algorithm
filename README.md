@@ -1,5 +1,7 @@
 ## VBEST: A Velocity Based Estimates for Sampling Tweets
 
+Check core_functions.py for the core functions of VBEST
+
 Citation
 
 `
@@ -37,10 +39,14 @@ Buskirk, T. & Blakely, B. (2021). Sweet Tweets! Investigating the Performance of
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Insert stuff here
-
+This research conducted at Bowling Green State University. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+### Motivation
+
+Sampling Tweets from Twitter is a common task for researchers, but previous techniques focused on building a graph of connections, where each node represents some relationship between 2 users. This is useful, but for our use case we wanted to randomly sample Twitter for Covid related Tweets based on geography (certain cities in the U.S.). Using the previous techniques of building a graph of users doesn't dynamically scale as new people join Twitter, or visit a city for a weekend and make a Tweet while there. This is why we chose to use [Twitters Search API](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets), which let us sample 1 weeks worth of a data using the free tier
+
 
 
 
@@ -59,9 +65,43 @@ Insert stuff here
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+In order to use the VBEST algorithm, you need to set up rpy2, so that you can use R's LOESS model. 
 
+How to sample:
+
+1. Call time_sampling("date_string", n_queries) 
+    * This function is used for the initial uniform sampling
+    * Where "date_string" in the form "year-month-day". This is the date you're sampling from.
+    * Creates n_queries amount of uniform timestamps and their corresponding tweet IDs
+    * Returns **tweet ID list**, **timestamp list**
+        * This is used to find the velocities through out a day, use the tweet IDs to sample from twitter
+        * Timestamps are just used as a reference
+    * Currently this function only supports time intervals of 1 day, but it's easy to scale to n days.
+   
+2. Call velocity_cleaner_real(tweepy & query stuff, ...,  sample_intervals, time_intervals, ...)
+    * Used for taking the uniform tweet ID's, sampling them from twitter, computing velocity, and unifies the data
+      * *Or call velocity_cleaner if you are providing a DataFrame of all tweets for a given day*
+    * **sample_intervals**: the **tweet ID list** returned from time_sampling()
+    * **time_intervals**: the **timestamp list** returned from time_sampling()
+    * **Returns a DataFrame** consiting of summaries of each query used for the uniform sampling
+        * **Returned DataFrame** *(Each row represents a query, each row has 8 variables defined as below)*
+            * query_1:
+              * *Variable Name : Description*
+              * **velocity** : duration_of_query_in_seconds / total_tweets_pulled (TPP) 
+              * **time** : (start time, time of first tweet in query)
+              * **min_id** : (tweet ID)
+              * **max_id** : (tweet ID)
+              * **time_end** : (time of last tweet in query)
+              * **utc** : (time start in UTC)
+              * **seconds** : (duration of query: time - time_end)
+              * **tpp** : (Total Tweets Pulled, total amount of Tweets returned in the query)
+ 
+3. Call vbest_test(DataFrame from step 2, number of tweets to sample)
+   * Returns a lot of stuff, but the first return is a DataFrame of timepoints to sample from
+   * There are 3 types of different samples and 3 different sample sizes in this DataFrame
+      * This needs to be cleaned up to only return 1 output
+   * Currently you need to turn the returned sampling timepoints into tweet IDs using sec2ids()
+    
 
 
 # VBEST Algorithm
