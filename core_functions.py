@@ -15,12 +15,18 @@ import tweepy_utils as twpUtil
 def dt2sec(date):
     return float((date.hour * 60 + date.minute) * 60 + date.second + (date.microsecond / 1000000))
     
-# Sample the already collected corpus of tweets, as if we were collecting them live
 def fake_sample(df,upper_id,lower_id, spp = 100):
+    # Sample the already collected corpus of tweets, as if we were collecting them live
     return df.loc[(df['tweet_id'] > lower_id) & (df['tweet_id'] <= upper_id)].head(spp)
 
-# sample_id = 1 element in sample_intervals
+def sec2ids(date, time_list):
+    # Take a list of timestamps for a given date and convert them into their corresponding tweet IDs 
+    datet = datetime.strptime(date,'%Y-%m-%d') + timedelta(days=0)
+    sample_ids = [tweetId_from_datetime(timedelta(seconds = sec) + datet) for sec in time_list]
+    return sample_ids
+
 def real_sample(twitter,circle,region,until_date, max_id,since_id,keyword="-filter:retweets",spp=100):
+    # sample_id = 1 element in sample_intervals
     li = []
     previous_id = max_id
     for i in range(0,spp//100):
