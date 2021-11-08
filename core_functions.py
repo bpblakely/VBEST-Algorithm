@@ -46,7 +46,6 @@ def time_sampling(date_string, queries= 360, start_range_max = None,set_random_n
         date_list.append(time)
         id_list.append(twtID.tweetId_from_datetime(time))
     if debug:
-        return id_list,date_list, random_number
     return id_list, date_list
 
 #%% Compute Velocity from sample intervals returned by time_sampling
