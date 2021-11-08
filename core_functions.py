@@ -233,8 +233,7 @@ def custom_func(file_name, file_path = r"G:\Programming\R_scripts"):
 
 def vbest_test(scout,psu_n=624):
     # The VBEST algorithm which calls R code from Python
-    # Used in the experiment of VBEST, but isn't used for the actual implementation. 
-    # See vbest_short for the simpler version
+    # Used in the experiment of VBEST, could be simplified by removing unneeded samples 
     
     vbest = custom_func('VBESTfinalR.R')
     rdf = df2r(scout[['seconds','velocity']])
@@ -265,7 +264,7 @@ def vbest_test(scout,psu_n=624):
     return samples,psu_stuff,span,total_tweets,npsu, size, seeds
 
 def vbest_short(scout,psu_n=624):
-    # Significantly simplified version of the previous VBEST algorithm. Only returns what's required for the VBEST method
+    # Simplified VBEST, only returns the loess model information. Used when comparing against other smoothing functions
     vbest = custom_func('VBESTfinalR.R')
     rdf = df2r(scout[['seconds','velocity']])
     res = vbest.VBESTshort(rdf.rx2('seconds'),rdf.rx2('velocity'),Vbestn=psu_n)
