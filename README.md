@@ -36,6 +36,8 @@ Ideally, we'd want to take a random sample or uniform sample of Tweets, since th
 To achieve this, we used synthetically made Tweet IDs to leverage the max_tweet_id query search option to let us sample at any time in a day. 
 With precise time control (down to the millisecond in the day), we could then create any sampling technique we wanted.
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ### Applications
 
 **This research is directly applicable to [Twitter's Full-Archive Search for Academic Research](https://blog.twitter.com/developer/en_us/topics/tools/2021/enabling-the-future-of-academic-research-with-the-twitter-api)!** 
@@ -45,22 +47,24 @@ With so much information available and only being able to access a fraction of i
 
 VBEST models the distribution of Tweets, pertaining to your specific search queries, and returns a list of the best times that you should sample based on the distribution of Tweets.
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 #### Ways to use VBEST in Full-Archive Research 
 
 *This is useable for ANY of the parameters in the Search API, so filtering by keyword searches, and/or geography, and/or language, ect, all work just fine as long as you consistently use the same parameters.*
 
 1. Estimate the number of Tweets for you search query while using minimal queries.
-* This estimation is simply the area under the modeled distribution curve.
-* You could estimate the keyword "Covid" for all of America over the last 2 years.
-    * There would be billions of Tweets, but you don't have to spend billions of queries to find that out. You can simply use VBEST to find an accurate estimate of the total number of Tweets matching our search criteria.
+   * This estimation is simply the area under the modeled distribution curve.
+   * You could estimate the keyword "Covid" for all of America over the last 2 years.
+      * There would be billions of Tweets, but you don't have to spend billions of queries to find that out. You can simply use VBEST to find an accurate estimate of the total number of Tweets matching our search criteria.
 
 2. Estimating keyword frequency.
-* Keywords can be estimated by first estimating a keyword as defined previously, then apply step 1 again, but using the keyword " * " which is a wildcard operater  allowing any Tweet to be considered.
-* Manually computing keyword frequency could be impossible if the number of Tweets you're considering is in the millions, so estimating it makes it not only possible, but easy
+   * Keywords can be estimated by first estimating a keyword as defined previously, then apply step 1 again, but using the keyword " * " which is a wildcard operater  allowing any Tweet to be considered.
+   * Manually computing keyword frequency could be impossible if the number of Tweets you're considering is in the millions, so estimating it makes it not only possible, but easy
 
 3. Efficient sampling
-  * The main point of VBEST was to build an efficent sampling algorithm around the many caveats of Twitter and its API.
-  * By roughly knowing where Tweets fall in a given day, you can spread your samples out to ensure you don't duplicate any data or waste any queries.
+   * The main point of VBEST was to build an efficent sampling algorithm around the many caveats of Twitter and its API.
+   * By roughly knowing where Tweets fall in a given day, you can spread your samples out to ensure you don't duplicate any data or waste any queries.
 
 I'm sure there are many other ways to apply this research, but we value these three applications as being essential for any future full-archive research, given the scale of the data available and the API limitations in place.
 
@@ -120,6 +124,8 @@ How to sample:
    * Currently you need to turn the returned sampling timepoints into tweet IDs using sec2ids()
     
 4. Take the tweet IDs and sample 
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Hyper-parameter Testing
 
