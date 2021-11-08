@@ -26,23 +26,21 @@ def real_sample(twitter,circle,region,until_date, max_id,since_id,keyword="-filt
     temp_df['seconds']=temp_df.tweet_id.apply(twtID.datetime_from_tweetId).apply(dt2sec)
     return temp_df
 
-def time_sampling(date_string, queries= 360, start_range_max = None,debug = False,set_random_number=0):
+def time_sampling(date_string, queries= 360, start_range_max = None,set_random_number=0):
     # returns time sample intervals and their corresponding tweet IDs, which lets us sample Twitter easily
-    
+    # start_range_max lets you define a maximum time to start at, which lets you be able to avoid selecting the last few seconds of a day for sampling 
+        # If a uniform sample was to be started at the last 5 seconds of the day, that gives 5 seconds to collect 100 tweets, which usually didn't happen
+        # This let's us make sure we sample just far enough from the end of the day to get at least 100 tweets
+            # (Usually start_range_max = (length of time interval in minutes -2.5 minutes)
+            
     date = datetime.strptime(date_string,'%Y-%m-%d') + timedelta(days=1)
     if start_range_max is None:
         start_range_max = 1440/queries # 1440 = number of minutes in a day
     constant = 1440/queries # to always take steps in the correct length of time
-    print(start_range_max)
     # we are 1 ms over what tweets could possibly show up, but it doesn't matter because we CAN'T recieve tweets from the next day, since we can't recieve tweets from that day anyways
     id_list = []
     date_list = [] # not needed, but nice to see what's going on
-    if debug and set_random_number > 0:
-        random_number = set_random_number
-    else:
-        random_number = random.uniform(0,start_range_max)
     start = date - timedelta(minutes= random_number)
-    # print(random_number)
     for i in range(0, int(queries)):
         time = start - timedelta(minutes = constant * i)
         date_list.append(time)
