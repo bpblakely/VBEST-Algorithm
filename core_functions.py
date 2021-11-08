@@ -7,6 +7,11 @@ import tweepy_utils as twpUtil
 # This is a simplified version of velocitiy_utils.py, where I'm including only the important functions for VBEST
 # Hopefully this makes it easier to extend from our work
 
+# SPP = Size Per Pull
+    # The maximum amount of tweets you want returned from a query, max = 100
+    # Always set to 100, but left as a parameter in case Twitter fixes their API limitation 
+        # (currently Twitter restricts only by # of queries, but not # of tweets like they state they do)
+
 def dt2sec(date):
     return float((date.hour * 60 + date.minute) * 60 + date.second + (date.microsecond / 1000000))
     
