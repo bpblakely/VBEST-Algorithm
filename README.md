@@ -5,7 +5,7 @@ Check core_functions.py for the core functions of VBEST
 Citation
 
 `
-Buskirk, T. & Blakely, B. (2021). Sweet Tweets! Investigating the Performance of a New Method for Probability-Based Twitter Sampling Trent D. Buskirk, Novak Family Distinguished Professor of Data Science, BGSU Brian Blakely, Computer Science and Mathematics Major, BGSU
+Buskirk, T. & Blakely, B. (2022). Sweet Tweets! Investigating the Performance of a New Method for Probability-Based Twitter Sampling Trent D. Buskirk, Novak Family Distinguished Professor of Data Science, BGSU Brian Blakely, Computer Science and Mathematics Major, BGSU
 `
 
 
@@ -124,18 +124,6 @@ How to sample:
 4. Take the tweet IDs and sample 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-## Hyper-parameter Testing
-
-Pre-experiment data comparing hyper-parameters and other smoothing techniques such as spline fitting can be found here.
-
-This mainly compares the number of queries you should use in the uniform sampling step as well as some possible techniques to reduce the variance of velocities.
-
-https://pre-experiment.herokuapp.com/
-
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
