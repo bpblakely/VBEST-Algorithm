@@ -22,7 +22,7 @@ def fake_sample(df,upper_id,lower_id, spp = 100):
 def sec2ids(date, time_list):
     # Take a list of timestamps for a given date and convert them into their corresponding tweet IDs 
     datet = datetime.strptime(date,'%Y-%m-%d') + timedelta(days=0)
-    sample_ids = [tweetId_from_datetime(timedelta(seconds = sec) + datet) for sec in time_list]
+    sample_ids = [twtID.tweetId_from_datetime(timedelta(seconds = sec) + datet) for sec in time_list]
     return sample_ids
 
 def real_sample(twitter,circle,region,until_date, max_id,since_id,keyword="-filter:retweets",spp=100):
@@ -37,7 +37,7 @@ def real_sample(twitter,circle,region,until_date, max_id,since_id,keyword="-filt
     temp_df['seconds']=temp_df.tweet_id.apply(twtID.datetime_from_tweetId).apply(dt2sec)
     return temp_df
 
-def time_sampling(date_string, queries= 360, start_range_max = None,set_random_number=0):
+def time_sampling(date_string, queries= 360, start_range_max = None,random_number=0):
     # returns time sample intervals and their corresponding tweet IDs, which lets us sample Twitter easily
     # start_range_max lets you define a maximum time to start at, which lets you be able to avoid selecting the last few seconds of a day for sampling 
         # If a uniform sample was to be started at the last 5 seconds of the day, that gives 5 seconds to collect 100 tweets, which usually didn't happen
@@ -56,7 +56,7 @@ def time_sampling(date_string, queries= 360, start_range_max = None,set_random_n
         time = start - timedelta(minutes = constant * i)
         date_list.append(time)
         id_list.append(twtID.tweetId_from_datetime(time))
-    if debug:
+
     return id_list, date_list
 
 #%% Compute Velocity from sample intervals returned by time_sampling
