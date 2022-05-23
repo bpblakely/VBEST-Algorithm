@@ -8,6 +8,8 @@ Citation
 Buskirk, T. & Blakely, B. (2022). Sweet Tweets! Investigating the Performance of a New Method for Probability-Based Twitter Sampling Trent D. Buskirk, Novak Family Distinguished Professor of Data Science, BGSU Brian Blakely, Computer Science and Mathematics Major, BGSU
 `
 
+https://epjdatascience.springeropen.com/articles/10.1140/epjds/s13688-022-00321-1
+
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
